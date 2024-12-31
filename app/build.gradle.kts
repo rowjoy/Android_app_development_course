@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.tracker.androidcourse"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.tracker.androidcourse"
