@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.selection.DisableSelection
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -96,102 +98,14 @@ fun bodyTextWidget(text : String){
 }
 
 
-@Composable
-fun ColumnScope.CustomSurface ( weight : Float, color: Color){
-    Surface (
-        modifier = Modifier
-            // .width(200.dp)
-            .fillMaxWidth()
-            .height(300.dp)
-            .weight(weight),
-         color  = color,
-         border = BorderStroke(1.dp,AppColors.PurpleGrey80)
-
-        ) {
-        CustomText(text = "Jamirul islam")
-    }
-}
-
-
-@Composable
-fun  RowScope.CustomRowSurface (){
-    Surface (
-        modifier = Modifier
-            .width(200.dp)
-            .height(200.dp),
-        color = AppColors.PurpleGrey80,
-    ){
-
-    }
-}
 
 
 
-@Composable
-fun boxComposa (){
-   Box(modifier = Modifier.fillMaxSize(),
-      contentAlignment = Alignment.TopCenter
-     ){
-       Box(modifier = Modifier.background(Color.Cyan),
-            contentAlignment = Alignment.Center,
-           ) {
-           Box(modifier = Modifier
-               .height(50.dp)
-               .width(50.dp)
-               .background(Color.Blue))
-           Greeting(
-               name = "I love Computer",
-               modifier = Modifier.padding(10.dp)
-           )
-       }
-   }
-}
 
 
-@Composable
-fun CustomText1 (){
-    Text(text = stringResource(id = R.string.app_name),
-        modifier = Modifier.padding(20.dp),
-        fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-        fontWeight = FontWeight.Bold,
-        fontStyle = FontStyle.Italic,
-        textAlign = TextAlign.End,
-    )
-}
 
 
-@Composable
-fun CustomText2(){
-    Text(text = "Jamirul islam".repeat(20),
-        //minLines = 2,
-        maxLines = 2,
-        overflow = TextOverflow.Ellipsis
-    )
-}
 
-
-@Composable
-fun CustomText3 (){
-    Text(
-
-        buildAnnotatedString {
-            withStyle(style = SpanStyle(
-                color = AppColors.Pink80,
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic
-            )){
-                append("A")
-
-            }
-            append("B")
-            append("C")
-            append("D")
-            append("E")
-        },
-        modifier = Modifier.padding(30.dp),
-    );
-}
 
 
 
@@ -206,6 +120,7 @@ fun GreetingPreview() {
                CustomText1()
                CustomText2()
                CustomText3()
+
 
            }
         }
