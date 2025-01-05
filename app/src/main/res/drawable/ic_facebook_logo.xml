@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Background Circle -->
+    <path
+        android:pathData="M12,0C5.37258,0 0,5.37258 0,12C0,18.6274 5.37258,24 12,24C18.6274,24 24,18.6274 24,12C24,5.37258 18.6274,0 12,0Z"
+        android:fillColor="#1877F2"/> <!-- Facebook Blue -->
+
+    <!-- F Letter -->
+    <path
+        android:pathData="M15.4375,12.25L16,9.5H13.375V7.9375C13.375,7.125 13.6875,6.5 15,6.5H16V4C15.375,4 14.5625,4 13.5,4C11.5,4 10.125,5.1875 10.125,7.5625V9.5H8.5V12.25H10.125V20H13.375V12.25H15.4375Z"
+        android:fillColor="#FFFFFF"/> <!-- White for the F letter -->
+</vector>
