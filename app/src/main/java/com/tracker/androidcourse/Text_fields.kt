@@ -1,6 +1,7 @@
 package com.tracker.androidcourse
 
 import android.os.Bundle
+import android.util.Patterns
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -14,12 +15,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -35,6 +39,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -64,9 +70,14 @@ fun CustomTextField(
     imageVector: ImageVector,
     filedValue : String,
     trailingIconShow : Boolean = false,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    trailingIcon: @Composable() (() -> Unit)? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ){
    OutlinedTextField(
+       minLines = 1,
+       maxLines = 1,
+       visualTransformation = visualTransformation,
        modifier = Modifier
            .fillMaxWidth()
            .padding(20.dp),
@@ -79,11 +90,8 @@ fun CustomTextField(
        leadingIcon = {
            Icon(imageVector = imageVector, contentDescription = "Email" )
        },
-       trailingIcon = {
-           if (trailingIconShow){
-               Icon(imageVector = Icons.Filled.AddCircle, contentDescription = "View" )
-           }
-       },
+       trailingIcon = trailingIcon,
+
        colors =  OutlinedTextFieldDefaults.colors(
           unfocusedBorderColor = Color.Black,
            focusedBorderColor = AppColors.Purple80,
@@ -106,6 +114,14 @@ fun TextFieldsPreView (){
             ) {
                 var emailController by remember { mutableStateOf("")}
                 var passwordController by remember { mutableStateOf(value = "")}
+                var passwordLockView by remember { mutableStateOf(value = true)}
+                var  imageVectors: ImageVector = if (passwordLockView) Icons.Filled.Lock else Icons.Filled.Done
+                var  hideEmaileIcon by remember { mutableStateOf(value = true) }
+                fun isValidEmail(email: String): Boolean {
+                    return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+                }
+                var emailIsValid by remember { mutableStateOf(value = false)}
+                var emailIcon :  ImageVector = if (emailIsValid) Icons.Default.Done else Icons.Default.Clear
 
                 Text(text = "Welcome back! Glad to see you , Again!",
                       modifier = Modifier
@@ -123,9 +139,18 @@ fun TextFieldsPreView (){
                    labelName = "Enter email",
                    imageVector = Icons.Filled.Email,
                    filedValue = emailController,
-                   trailingIconShow = false,
+                  // trailingIconShow = false,
+                   trailingIcon = {
+                      if (!hideEmaileIcon) Icon(imageVector =  emailIcon, contentDescription = "Done")
+                   },
                    onValueChange = {
                      emailController = it
+                       if (it.isNotEmpty()){
+                           hideEmaileIcon = false
+                           emailIsValid = isValidEmail(it)
+                       }else {
+                           hideEmaileIcon = true
+                       }
                    }
                )
                 CustomTextField(
@@ -133,6 +158,16 @@ fun TextFieldsPreView (){
                     imageVector = Icons.Filled.Lock,
                     filedValue = passwordController,
                     trailingIconShow = true,
+                    trailingIcon = {
+                        IconButton(
+                            onClick = {
+                                passwordLockView = !passwordLockView
+                            }) {
+                            Icon( imageVector = imageVectors , contentDescription = "Lock" )
+
+                        }
+                    },
+                    visualTransformation = if(!passwordLockView) VisualTransformation.None else PasswordVisualTransformation(),
                     onValueChange = {
                       passwordController = it
                     }
