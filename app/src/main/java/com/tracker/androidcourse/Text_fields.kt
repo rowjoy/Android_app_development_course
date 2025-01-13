@@ -1,5 +1,4 @@
 package com.tracker.androidcourse
-
 import android.os.Bundle
 import android.util.Patterns
 import androidx.activity.ComponentActivity
@@ -198,10 +197,6 @@ fun TextFieldsPreView (){
                     GoogleButton(
                     )
                 }
-
-
-
-
             }
         }
     }
