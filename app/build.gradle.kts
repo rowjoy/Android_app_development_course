@@ -1,8 +1,10 @@
 //module-level build.gradle.kts file:
 
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+//    alias(libs.plugins.androidApplication)
+//    alias(libs.plugins.jetbrainsKotlinAndroid)
+    id ("com.android.application")
+    id ("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
 }
 
@@ -43,7 +45,8 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.2"
+
     }
     packaging {
         resources {
@@ -72,6 +75,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+    ksp ("com.google.devtools.ksp:symbol-processing:1.9.0-1.0.12")
     implementation("io.coil-kt.coil3:coil-compose:3.0.4")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
     implementation("androidx.room:room-runtime:$room_version")
@@ -79,8 +85,9 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
     implementation("jakarta.inject:jakarta.inject-api:2.0.1")
     implementation("androidx.test.espresso:espresso-core:3.6.1")
-
+    implementation("androidx.room:room-ktx:$room_version")
     implementation("com.google.dagger:hilt-android:2.51.1")
+//    ksp("com.google.dagger:hilt-compiler:2.51.1")
 //    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
 }

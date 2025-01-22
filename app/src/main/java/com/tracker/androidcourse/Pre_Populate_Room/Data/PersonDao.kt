@@ -6,9 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 @Dao
-
 interface  PersonDao {
-
     @Query("SELECT * FROM appuser")
     fun  readAll(): Flow<List<Person>>
 }

@@ -14,7 +14,6 @@ import jakarta.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object  DatabaseModule {
-
     @Singleton
     @Provides
     fun provideDatabase (
@@ -24,9 +23,6 @@ object  DatabaseModule {
         PersonDatabase :: class.java,
         "app_database"
     ).createFromAsset("Database/appflow.db").build()
-
-
-
     @Singleton
     @Provides
     fun  provideDao(database: PersonDatabase) = database.personDao()
