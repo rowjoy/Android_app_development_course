@@ -3,6 +3,7 @@ package com.tracker.androidcourse
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -28,6 +29,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,6 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
+import com.tracker.androidcourse.Pre_Populate_Room.Databases.PersonViewModel
 import com.tracker.androidcourse.repocomponent.UserInfoLocalData
 import com.tracker.androidcourse.ui.theme.AndroidCourseTheme
 import com.tracker.androidcourse.ui.theme.AppColors
@@ -54,12 +58,31 @@ class MainActivity : ComponentActivity() {
         setContent {
             AndroidCourseTheme {
                 Surface {
-                  AndroidCourseTheme {
-
-                  }
+                    val viewModel: PersonViewModel by viewModels()
+                   UserListShow(viewModel = viewModel)
                 }
             }
         }
+    }
+}
+
+
+
+@Composable
+fun UserListShow (viewModel: PersonViewModel){
+    val  results by viewModel.readAll.collectAsState(initial = emptyList())
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+       if (results.isNotEmpty()) {
+            for ( person in results){
+                Text(text = person.name)
+            }
+       }else{
+         Text(text = "Data not found")  
+       }
     }
 }
 

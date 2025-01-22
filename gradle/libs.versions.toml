@@ -6,8 +6,8 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.9.3"
-composeBom = "2024.12.01"
+activityCompose = "1.10.0"
+composeBom = "2025.01.00"
 composeMaterial = "1.4.0"
 
 [libraries]
@@ -30,4 +30,5 @@ androidx-compose-material = { group = "androidx.wear.compose", name = "compose-m
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
 
