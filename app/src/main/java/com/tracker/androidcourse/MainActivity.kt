@@ -29,8 +29,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             AndroidCourseTheme {
                 Surface {
-                  val viewModel: PersonViewModel by viewModels();
-                  UserListShow(data = viewModel);
+                    Text(text = "Hello")
+
+//                  val viewModel: PersonViewModel by viewModels();
+//                  UserListShow(data = viewModel);
                 }
             }
         }

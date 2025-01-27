@@ -61,7 +61,7 @@ android {
 
 dependencies {
     val room_version = "2.6.1"
-    val kotlin_version = "1.9.21"
+//    val kotlin_version = "1.9.21"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -103,5 +103,9 @@ dependencies {
 kapt {
     javacOptions {
         option("-XDignore.symbol.file", "true")
+    }
+    correctErrorTypes = true
+    arguments {
+        arg("dagger.hilt.disableModulesHaveInstallInCheck", "true")
     }
 }
