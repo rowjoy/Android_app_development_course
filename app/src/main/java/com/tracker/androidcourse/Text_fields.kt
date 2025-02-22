@@ -143,7 +143,7 @@ fun TextFieldsPreView (){
                       if (!hideEmaileIcon) Icon(imageVector =  emailIcon, contentDescription = "Done")
                    },
                    onValueChange = {
-                     emailController = it;
+                     emailController = it.toString();
                        if (it.isNotEmpty()){
                            hideEmaileIcon = false
                            emailIsValid = isValidEmail(it)

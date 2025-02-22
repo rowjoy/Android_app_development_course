@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally,
 
+
                     ){
                        var value by remember {
                            mutableStateOf(0)
@@ -54,11 +55,9 @@ class MainActivity : ComponentActivity() {
                                 keyboardType = KeyboardType.Number,
                             ),
                             onValueChange = {
-                                value = if (it.isNotEmpty()){
-                                    it.toInt()
-                                }else {
-                                    0
-                                }
+                              //  value = it.toIntOrNull() ?: 0
+                                value = it.toIntOrNull() ?: 0;
+
                             }
 
                         )
