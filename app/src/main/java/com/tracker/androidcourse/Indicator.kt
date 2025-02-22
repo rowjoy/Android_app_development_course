@@ -21,6 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.animation.core.*
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
@@ -33,24 +38,38 @@ fun IndicatorWidget (
     maxIndicatorValue : Int = 1000,
     indicatorBgColor : Color = Color.Gray.copy(alpha = 0.2f),
     indicatorValueColor: Color = Color.Blue,
-    foregroundStartAngle: Float = 150f,
     bgStockwidth: Float = 100f,
+
+    subtitle: String = "Remaining",
+    subtitleColor: Color = Color.Gray,
+    subtitleFontSize: TextUnit = MaterialTheme.typography.caption1.fontSize,
+    dataSuffix: String = "GB",
+    dataTextColor: Color = Color.Black,
+    dataTextFontSize: TextUnit =  MaterialTheme.typography.title1.fontSize
 
 ){
 
-
-
-   val animatedIndicatorValue  = remember { Animatable(initialValue = 0f)}
-
-   LaunchedEffect(key1 = indicatorValue) {
-       animatedIndicatorValue.animateTo(indicatorValue.toFloat())
+   var allowedIndicatorValue by remember {
+       mutableStateOf( maxIndicatorValue)
    }
 
-   val percentage = (animatedIndicatorValue.value / maxIndicatorValue) * 100;
+   allowedIndicatorValue = if (indicatorValue <= maxIndicatorValue){
+       indicatorValue
+   }else {
+       maxIndicatorValue
+   }
+
+   var animatedIndicatorValue  by remember { mutableStateOf(value = 0f) }
+
+   LaunchedEffect(key1 = allowedIndicatorValue) {
+       animatedIndicatorValue = allowedIndicatorValue.toFloat()
+   }
+
+   val percentage = (animatedIndicatorValue / maxIndicatorValue) * 100;
 
    val sweepAngle by animateFloatAsState(
        targetValue = (2.4 * percentage).toFloat(),
-       animationSpec = tween(1000)
+       animationSpec = tween(1000), label = ""
    );
 
 
@@ -62,28 +81,67 @@ fun IndicatorWidget (
                backgroundIndicator( // this is backgroundIndicator component
                    indicatorColor = indicatorBgColor,
                    startAngle = 150f,
-                   sweepAngle = 250f,
+                   sweepAngle = 240f,
                    useCenter = false,
                    componentSize = componentSize,
                    width = bgStockwidth
                );
                foregroundIndicator(
                    foregroundIndicatorSize = componentSize,
-                   startAngle = foregroundStartAngle,
+                   startAngle = 150f,
                    sweepAngle = sweepAngle,
                    indicatorValueColor = indicatorValueColor,
                    width = bgStockwidth
                );
            },
+       verticalArrangement =  Arrangement.Center,
+       horizontalAlignment = Alignment.CenterHorizontally
    ) {
-
+      TextElements(
+         subtitle,
+          subtitleColor,
+          subtitleFontSize,
+          allowedIndicatorValue.toString(),
+          dataSuffix,
+          dataTextColor,
+          dataTextFontSize
+      )
    }
 }
 
 @Composable
 @Preview(showBackground = true)
 fun IndicatorPreview (){
-     IndicatorWidget();
+    IndicatorWidget();
+}
+
+
+
+@Composable
+fun TextElements (
+    subtitle : String,
+    subtitleColor : Color,
+    subtitleFontSize : TextUnit,
+    dataCounter : String,
+    dataSuffix : String,
+    dataTextColor : Color,
+    dataTextFontSize : TextUnit
+
+    ){
+     Text(
+         text = subtitle,
+         color =  subtitleColor,
+         fontSize = subtitleFontSize,
+         textAlign = TextAlign.Center,
+     )
+
+    Text(
+        text = "$dataCounter ${dataSuffix.take(2)}",
+        color = dataTextColor,
+        fontSize = dataTextFontSize,
+        textAlign = TextAlign.Center,
+        fontWeight = FontWeight.Bold,
+    )
 }
 
 
